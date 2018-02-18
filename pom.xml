@@ -1,16 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	
+
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>zartc.util</groupId>
-	<artifactId>SpringLikeToStringStyle</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<artifactId>ZCToStringStyle</artifactId>
+	<version>1.2</version>
 	<packaging>jar</packaging>
-	
-	<description>A ToStringStyle that mimic the format produced by Spring's ToStringCreator.</description>
+
+	<description>
+		A ToStringStyle that produce toString output displaying detailled 
+	  information about the data type in arrays and collections.
+  </description>
+
+	<inceptionYear>2014</inceptionYear>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>zartc</id>
+			<name>Pascal jacob</name>
+			<email>zartc@wanadoo.fr</email>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>https://gitlab.com/zartc/ZCToStringStyle.git</connection>
+	</scm>
 
 	<properties>
 		<java.version>1.7</java.version>
@@ -21,7 +44,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
+			<version>[3.0,)</version>
 		</dependency>
 	</dependencies>
 
@@ -35,22 +58,7 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.2.1</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>java</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<mainClass>zartc.util.ToStringBuilderTrial</mainClass>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
-		
+
 </project>
