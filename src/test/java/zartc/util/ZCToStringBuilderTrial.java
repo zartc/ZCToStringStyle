@@ -21,7 +21,7 @@ public class ZCToStringBuilderTrial {
 
 	@SuppressWarnings("deprecation")
 	public static void main(final String[] args) {
-		ToStringBuilder.setDefaultStyle(ZCToStringStyle.LONG_WITH_HASH_STYLE);
+		ToStringBuilder.setDefaultStyle(ZCToStringStyle.SHORT_WITH_HASH_STYLE);
 
 		TrialClass o = new TrialClass(new Person[] { 
 				new Person("Alice", new Date(Date.parse("1964/4/6"))),

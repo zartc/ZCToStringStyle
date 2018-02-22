@@ -18,11 +18,8 @@ package zartc.util;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Queue;
-import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -44,7 +41,6 @@ public class ZCToStringStyle extends ToStringStyle {
 	public static final String SHORT_CLASSNAME = "short";
 	public static final String LONG_CLASSNAME = "long";
 	public static final String HASHCODE = "@";
-	public static final String ARRAY_TYPE = "<>";
 
 	/**
 	 * Pre-intantiated toStringStyle that output no class name prefix, no hashcode
@@ -69,28 +65,8 @@ public class ZCToStringStyle extends ToStringStyle {
 	 * object's system hashcode but no array type.
 	 */
 	public static final ToStringStyle LONG_WITH_HASH_STYLE = new ZCToStringStyle(LONG_CLASSNAME + HASHCODE);
-	
-	/**
-	 * Pre-intantiated toStringStyle that output short class name prefix, the
-	 * object's system hashcode and array type.
-	 */
-	public static final ToStringStyle SHORT_WITH_HASH_AND_ARRAYTYPE_STYLE = new ZCToStringStyle(
-			SHORT_CLASSNAME + HASHCODE + ARRAY_TYPE);
-	
-	/**
-	 * Pre-intantiated toStringStyle that output long class name prefix, the
-	 * object's system hashcode and array type.
-	 */
-	public static final ToStringStyle LONG_WITH_HASH_AND_ARRAYTYPE_STYLE = new ZCToStringStyle(
-			LONG_CLASSNAME + HASHCODE + ARRAY_TYPE);
 
-	private static final String COLLECTION = "colln";
-	private static final String QUEUE = "queue";
-	private static final String ARRAY = "array";
-	private static final String LIST = "list";
-	private static final String SET = "set";
-	private static final String MAP = "map";
-
+	
 	private static final String STRING_START = "\'";
 	private static final String STRING_END = STRING_START;
 
@@ -107,11 +83,6 @@ public class ZCToStringStyle extends ToStringStyle {
 	private static final String COLLECTION_SEP = " : ";
 
 	private static final String KEY_VALUE_SEP = " -> ";
-
-	/**
-	 * The detail for array content.
-	 */
-	private boolean arrayTypeDetail = false;
 
 	/**
 	 * Variation of the default style are possible using the following special
@@ -143,7 +114,6 @@ public class ZCToStringStyle extends ToStringStyle {
 
 		setUseIdentityHashCode(options.contains(HASHCODE));
 		setArrayContentDetail(true);
-		arrayTypeDetail = options.contains(ARRAY_TYPE);
 	}
 
 	@Override
@@ -160,62 +130,8 @@ public class ZCToStringStyle extends ToStringStyle {
 	}
 
 	@Override
-	protected void appendDetail(StringBuffer buffer, String fieldName, boolean[] array) {
-		appendArrayPrefix(buffer, array);
-		super.appendDetail(buffer, fieldName, array);
-	}
-
-	@Override
-	protected void appendDetail(StringBuffer buffer, String fieldName, byte[] array) {
-		appendArrayPrefix(buffer, array);
-		super.appendDetail(buffer, fieldName, array);
-	}
-
-	@Override
-	protected void appendDetail(StringBuffer buffer, String fieldName, char[] array) {
-		appendArrayPrefix(buffer, array);
-		super.appendDetail(buffer, fieldName, array);
-	}
-
-	@Override
-	protected void appendDetail(StringBuffer buffer, String fieldName, double[] array) {
-		appendArrayPrefix(buffer, array);
-		super.appendDetail(buffer, fieldName, array);
-	}
-
-	@Override
-	protected void appendDetail(StringBuffer buffer, String fieldName, float[] array) {
-		appendArrayPrefix(buffer, array);
-		super.appendDetail(buffer, fieldName, array);
-	}
-
-	@Override
-	protected void appendDetail(StringBuffer buffer, String fieldName, int[] array) {
-		appendArrayPrefix(buffer, array);
-		super.appendDetail(buffer, fieldName, array);
-	}
-
-	@Override
-	protected void appendDetail(StringBuffer buffer, String fieldName, long[] array) {
-		appendArrayPrefix(buffer, array);
-		super.appendDetail(buffer, fieldName, array);
-	}
-
-	@Override
-	protected void appendDetail(StringBuffer buffer, String fieldName, short[] array) {
-		appendArrayPrefix(buffer, array);
-		super.appendDetail(buffer, fieldName, array);
-	}
-
-	@Override
-	protected void appendDetail(StringBuffer buffer, String fieldName, Object[] array) {
-		appendArrayPrefix(buffer, array);
-		super.appendDetail(buffer, fieldName, array);
-	}
-
-	@Override
 	protected void appendDetail(StringBuffer buffer, String fieldName, Collection<?> collection) {
-		buffer.append(getCollectionTypeString(collection));
+		super.appendClassName(buffer, collection);
 		buffer.append(COLLECTION_START);
 
 		Iterator<?> it = collection.iterator();
@@ -234,7 +150,7 @@ public class ZCToStringStyle extends ToStringStyle {
 
 	@Override
 	protected void appendDetail(StringBuffer buffer, String fieldName, Map<?, ?> map) {
-		buffer.append(MAP);
+		super.appendClassName(buffer, map);
 		buffer.append(COLLECTION_START);
 
 		Iterator<?> it = map.entrySet().iterator();
@@ -255,33 +171,5 @@ public class ZCToStringStyle extends ToStringStyle {
 		appendDetail(buffer, fieldName, entry.getKey());
 		buffer.append(KEY_VALUE_SEP);
 		appendDetail(buffer, fieldName, entry.getValue());
-	}
-
-	private String getCollectionTypeString(Collection<?> value) {
-		if (value instanceof List) {
-			return LIST;
-		} else if (value instanceof Set) {
-			return SET;
-		} else if (value instanceof Queue) {
-			return QUEUE;
-		} else {
-			return COLLECTION;
-		}
-	}
-
-	@Override
-	protected void reflectionAppendArrayDetail(StringBuffer buffer, String fieldName, Object array) {
-		appendArrayPrefix(buffer, array);
-		super.reflectionAppendArrayDetail(buffer, fieldName, array);
-	}
-
-	protected void appendArrayPrefix(StringBuffer buffer, Object array) {
-		buffer.append(ARRAY);
-		if (arrayTypeDetail)
-			buffer.append(getSummaryObjectStartText()).append(getArrayType(array)).append(getSummaryObjectEndText());
-	}
-
-	private String getArrayType(Object array) {
-		return super.getShortClassName(array.getClass().getComponentType());
 	}
 }
