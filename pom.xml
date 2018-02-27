@@ -10,9 +10,8 @@
 	<packaging>jar</packaging>
 
 	<description>
-		A ToStringStyle that produce toString output displaying detailled 
-	  information about the data type in arrays and collections.
-  </description>
+		A ToStringStyle that produce toString output displaying detailled information about the data type in arrays and collections.
+	</description>
 
 	<inceptionYear>2014</inceptionYear>
 
@@ -57,6 +56,20 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
